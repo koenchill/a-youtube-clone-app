@@ -10,7 +10,7 @@ pipeline {
     }
     triggers { pollSCM('H/5 * * * *') }
     parameters {
-        string(name: 'DOCKERHUB_NAMESPACE', defaultValue: 'REPLACE_WITH_YOUR_DOCKERHUB_USER', description: 'Your Docker Hub namespace')
+        string(name: 'DOCKERHUB_NAMESPACE', defaultValue: 'koenchill', description: 'Your Docker Hub namespace')
         choice(name: 'API_MODE', choices: ['demo', 'live'], description: 'Demo uses synthetic metadata. Live needs a provider subscription and key.')
         booleanParam(name: 'ENFORCE_AUDIT', defaultValue: false, description: 'Learning default records npm vulnerabilities. Enable to fail on high or critical findings before release.')
     }
