@@ -1,0 +1,37 @@
+services:
+  web:
+    image: ${WEB_IMAGE:?Set WEB_IMAGE}
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:${APP_PORT:-8081}:8080"
+    depends_on:
+      proxy:
+        condition: service_healthy
+    read_only: true
+    tmpfs:
+      - /tmp:size=32m,mode=1777
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    mem_limit: 128m
+    pids_limit: 100
+    logging:
+      options: {max-size: 10m, max-file: '3'}
+  proxy:
+    image: ${PROXY_IMAGE:?Set PROXY_IMAGE}
+    restart: unless-stopped
+    environment:
+      API_MODE: ${API_MODE:-demo}
+      RAPIDAPI_KEY_FILE: /run/secrets/rapidapi_key
+    secrets: [rapidapi_key]
+    read_only: true
+    tmpfs:
+      - /tmp:size=16m,mode=1777
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    mem_limit: 256m
+    pids_limit: 100
+    logging:
+      options: {max-size: 10m, max-file: '3'}
+secrets:
+  rapidapi_key:
+    file: ${SECRET_FILE:?Set SECRET_FILE}
