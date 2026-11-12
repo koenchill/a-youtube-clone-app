@@ -24,6 +24,7 @@ pipeline {
                     if (!(params.DOCKERHUB_NAMESPACE ==~ /[a-z0-9][a-z0-9_-]{2,29}/)) {
                         error('Set a valid Docker Hub namespace')
                     }
+                    env.GIT_COMMIT = sh(script: 'git rev-parse HEAD', returnStdout: true).trim()
                     env.IMAGE_TAG = "${env.BUILD_NUMBER}-${sh(script: 'git rev-parse --short=12 HEAD', returnStdout: true).trim()}"
                     env.WEB_TAG = "${params.DOCKERHUB_NAMESPACE}/youtube-web:${env.IMAGE_TAG}"
                     env.PROXY_TAG = "${params.DOCKERHUB_NAMESPACE}/youtube-proxy:${env.IMAGE_TAG}"
