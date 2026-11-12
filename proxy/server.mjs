@@ -5,7 +5,7 @@ import { pathToFileURL } from 'node:url';
 const allowed = new Set(['search', 'videos', 'channels']);
 const queryKeys = new Set(['part', 'q', 'id', 'channelId', 'order', 'relatedToVideoId', 'type', 'maxResults', 'pageToken']);
 function fixture(route) {
-  const snippet = { title: 'Deployment training sample', channelId: 'training',
+  const snippet = { title: 'Joe CI/CD release 2', channelId: 'training',
     channelTitle: 'Training channel', description: 'Synthetic metadata for deployment checks.',
     thumbnails: { high: { url: '/sample-thumbnail.svg' } } };
   const item = { id: route === 'search' ? { videoId: 'aqz-KE-bpKQ' } : (route === 'channels' ? 'training' : 'aqz-KE-bpKQ'),
